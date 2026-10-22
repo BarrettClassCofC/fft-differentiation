@@ -10,10 +10,8 @@ Now we use the same basis to approximate the function itself. Given
 samples $u(x_j)$, we seek coefficients $c_k$ such that our approximant $p_N(x)$ can be written as
 
 $$
-
 p_N(x)=\sum_{k=-m}^{m}c_k e^{\mathrm{i} kx},\text{ with }
 \sum_{k=-m}^{m}c_k e^{\mathrm{i} kx_j}=u(x_j).
-
 $$
 
 This is a linear system $A\boldsymbol c=\boldsymbol u$ with entries
@@ -58,9 +56,9 @@ negative Fourier modes the array entries represent.
 ## Part 2. Computing derivatives
 
 Now we will use the FFT to compute derivatives, starting with $\sin(4x)$.
-Restrict yourself to odd $N=2m+1$. For even $N$, the positive and negative
-Nyquist modes give the same sampled values, so differentiating that mode
-requires special care. We avoid that issue here. If you are curious, try sampling the function $\sin(Nx/2)$ using the approach in part 1.
+Restrict yourself to odd $N=2m+1$. For even $N$, there is an unpaired
+highest-frequency mode that must be treated carefully. We avoid that issue
+here. If you are curious, try sampling the function $\sin(Nx/2)$ and $\cos(Nx/2)$ using the approach in part 1.
 
 1. As before, create a grid of equally spaced points on $[0,2\pi)$,
    sample the function, and retrieve the Fourier coefficients using the FFT.
@@ -68,12 +66,10 @@ requires special care. We avoid that issue here. If you are curious, try samplin
 2. Consider the Fourier representation of the interpolant and its
    derivative:
 
-   $$
-
+$$
    p_N(x)=\sum_{k=-m}^{m}c_k e^{\mathrm{i} kx},\qquad
    p_N'(x)=\sum_{k=-m}^{m}\mathrm{i} k c_k e^{\mathrm{i} kx}.
-
-   $$
+$$
 
    To find a derivative, multiply each coefficient by $\mathrm{i} k$. Take into
    account the special order of the coefficients that you investigated in
@@ -88,22 +84,18 @@ requires special care. We avoid that issue here. If you are curious, try samplin
 
 4. Now differentiate
 
-   $$
-
-   f(x)=\exp\!\bigl(\sin x+\cos(7\sin x)\bigr)
-
-   $$
+$$
+   f(x)=e^{\sin(2x)}+\cos\bigl(7\sin(2x)\bigr)
+$$
 
    both analytically and using the approach above. Plot both the analytical and your approximate derivatives on the same axes.
 
 5. Compute the error as odd $N$ increases. Use the maximum error
    at the grid points,
 
-   $$
-
-   E_N=\max_{0\leq j<N}|p_N'(x_j)-f'(x_j)|.
-
-   $$
+$$
+   E_N=\max_{0\leq j\lt N}\lvert p_N'(x_j)-f^\prime(x_j)\rvert.
+$$
 
    Create a convergence plot of $E_N$ against $N$ on a log-log scale.
    What happens to the error? Does it have a usual algebraic convergence
